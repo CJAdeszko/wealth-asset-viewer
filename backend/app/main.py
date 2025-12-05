@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from .api.assets import router as assets_router
 from .api.seed import router as seed_router
@@ -22,6 +23,15 @@ app = FastAPI(
     description="A read-only API for tracking and viewing financial assets",
     version="1.0.0",
     lifespan=lifespan,
+)
+
+# Configure CORS for frontend access
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.cors_origins,
+    allow_credentials=True,
+    allow_methods=["GET", "POST"],
+    allow_headers=["*"],
 )
 
 # Include routers
