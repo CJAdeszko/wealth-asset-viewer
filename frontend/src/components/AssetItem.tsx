@@ -10,14 +10,11 @@ export function AssetItem({ asset }: AssetItemProps) {
   
   return (
     <div className="flex items-center justify-between py-3 px-4 bg-white border-b border-slate-100 last:border-b-0 hover:bg-slate-50 transition-colors">
-      <div className="flex items-center gap-3">
-        <div className="w-2 h-2 rounded-full bg-slate-300"></div>
-        <div>
-          <p className="text-sm font-medium text-slate-700">{displayName}</p>
-          {asset.institution_name && (
-            <p className="text-xs text-slate-500">{asset.institution_name}</p>
-          )}
-        </div>
+      <div>
+        <p className="text-sm font-medium text-slate-700">{displayName}</p>
+        {asset.institution_name && (
+          <p className="text-xs text-slate-500">{asset.institution_name}</p>
+        )}
       </div>
       <div className="text-right">
         <p className={`text-sm font-semibold ${
