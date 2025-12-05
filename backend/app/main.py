@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from .api.assets import router as assets_router
+from .api.seed import router as seed_router
 from .config import settings
 from .database import create_tables
 
@@ -25,6 +26,7 @@ app = FastAPI(
 
 # Include routers
 app.include_router(assets_router, prefix=settings.api_v1_prefix)
+app.include_router(seed_router, prefix=settings.api_v1_prefix)
 
 
 @app.get("/health")
