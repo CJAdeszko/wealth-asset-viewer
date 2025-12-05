@@ -44,6 +44,12 @@ wealth-asset-viewer/
 
 ## Quick Start
 
+### Clone the repo locally
+
+```
+git clone git@github.com:CJAdeszko/wealth-asset-viewer.git
+```
+
 ### Option 1: Run with Docker (Recommended)
 
 Start all services with Docker Compose:
