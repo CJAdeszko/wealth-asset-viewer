@@ -1,8 +1,4 @@
-import uuid
-
-import pytest
 from fastapi.testclient import TestClient
-from sqlalchemy.orm import Session
 
 from app.models.asset import Asset
 
@@ -105,36 +101,6 @@ class TestListAssets:
         for item in data["items"]:
             assert item["wealth_asset_type"] == "Cash"
             assert item["is_active"] is True
-
-
-class TestGetAsset:
-    """Tests for GET /api/v1/assets/{wid} endpoint."""
-    
-    def test_get_asset_found(self, client: TestClient, sample_asset: Asset):
-        """Test getting an existing asset by wid."""
-        response = client.get(f"/api/v1/assets/{sample_asset.wid}")
-        
-        assert response.status_code == 200
-        data = response.json()
-        assert data["wid"] == str(sample_asset.wid)
-        assert data["asset_id"] == sample_asset.asset_id
-        assert data["nickname"] == sample_asset.nickname
-        assert data["wealth_asset_type"] == sample_asset.wealth_asset_type
-        assert data["balance_current"] == sample_asset.balance_current
-    
-    def test_get_asset_not_found(self, client: TestClient):
-        """Test getting a non-existent asset."""
-        non_existent_wid = uuid.uuid4()
-        response = client.get(f"/api/v1/assets/{non_existent_wid}")
-        
-        assert response.status_code == 404
-        assert response.json()["detail"] == "Asset not found"
-    
-    def test_get_asset_invalid_uuid(self, client: TestClient):
-        """Test getting an asset with invalid UUID format."""
-        response = client.get("/api/v1/assets/invalid-uuid")
-        
-        assert response.status_code == 422
 
 
 class TestHealthCheck:

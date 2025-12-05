@@ -45,13 +45,3 @@ export async function fetchAllAssets(): Promise<Asset[]> {
   return allAssets;
 }
 
-export async function fetchAsset(wid: string): Promise<Asset> {
-  const response = await fetch(`${API_BASE}/assets/${wid}`);
-  
-  if (!response.ok) {
-    throw new Error(`Failed to fetch asset: ${response.statusText}`);
-  }
-  
-  return response.json();
-}
-

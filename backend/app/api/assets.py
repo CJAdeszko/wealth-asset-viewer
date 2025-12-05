@@ -1,12 +1,11 @@
 from typing import Optional
-from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 
 from ..database import get_db
 from ..models.asset import Asset
-from ..schemas.asset import AssetListResponse, AssetResponse
+from ..schemas.asset import AssetListResponse
 
 router = APIRouter(prefix="/assets", tags=["assets"])
 
@@ -56,22 +55,4 @@ def list_assets(
         page_size=page_size,
         pages=pages,
     )
-
-
-@router.get("/{wid}", response_model=AssetResponse)
-def get_asset(
-    wid: UUID,
-    db: Session = Depends(get_db),
-) -> AssetResponse:
-    """
-    Get a single asset by its wid (UUID).
-    
-    - **wid**: The unique identifier of the asset
-    """
-    asset = db.query(Asset).filter(Asset.wid == wid).first()
-    
-    if asset is None:
-        raise HTTPException(status_code=404, detail="Asset not found")
-    
-    return asset
 
