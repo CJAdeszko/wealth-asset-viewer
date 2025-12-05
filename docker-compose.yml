@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: wealth-asset-db
+    environment:
+      POSTGRES_USER: wealth_user
+      POSTGRES_PASSWORD: wealth_password
+      POSTGRES_DB: wealth_assets
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wealth_user -d wealth_assets"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  db-test:
+    image: postgres:15-alpine
+    container_name: wealth-asset-db-test
+    environment:
+      POSTGRES_USER: wealth_user
+      POSTGRES_PASSWORD: wealth_password
+      POSTGRES_DB: wealth_assets_test
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_test_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wealth_user -d wealth_assets_test"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+  postgres_test_data:
+
